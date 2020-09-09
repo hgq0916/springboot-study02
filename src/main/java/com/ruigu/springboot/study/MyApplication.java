@@ -2,9 +2,17 @@ package com.ruigu.springboot.study;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cache.concurrent.ConcurrentMapCacheManager;
 import org.springframework.context.annotation.Bean;
+import org.springframework.data.redis.cache.RedisCacheConfiguration;
+import org.springframework.data.redis.cache.RedisCacheManager;
+import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
+
+import java.time.Duration;
 
 /**
  * @author hugangquan
@@ -19,11 +27,29 @@ public class MyApplication {
         SpringApplication.run(MyApplication.class,args);
     }
 
-    @Bean
+    /*@Bean
     public ConcurrentMapCacheManager cacheManager() {
         ConcurrentMapCacheManager cacheManager = new ConcurrentMapCacheManager();
         //cacheManager.setStoreByValue(true); //true表示缓存一份副本，否则缓存引用
         return cacheManager;
+    }*/
+
+    @Bean
+    public CacheManager cacheManager(RedisConnectionFactory factory) {
+        RedisCacheConfiguration config = RedisCacheConfiguration.defaultCacheConfig()
+                .entryTtl(Duration.ofSeconds(60))
+                .disableCachingNullValues();
+
+        return RedisCacheManager.builder(factory)
+                .cacheDefaults(config)
+                .transactionAware()
+                .build();
+    }
+
+    @Bean
+    public RedisTemplate redisTemplate(RedisConnectionFactory factory) {
+        StringRedisTemplate template = new StringRedisTemplate(factory);
+        return template;
     }
 
 }
