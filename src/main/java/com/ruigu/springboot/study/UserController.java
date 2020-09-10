@@ -1,5 +1,6 @@
 package com.ruigu.springboot.study;
 
+import com.ruigu.springboot.study.aop.EnablePermession;
 import com.ruigu.springboot.study.aop.HasPermession;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
