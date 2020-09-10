@@ -1,6 +1,7 @@
 package com.ruigu.springboot.study;
 
 import com.github.xiaoymin.knife4j.spring.annotations.EnableKnife4j;
+import com.ruigu.springboot.study.aop.EnablePermession;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cache.CacheManager;
@@ -16,12 +17,12 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import java.time.Duration;
 
-/**
- * @author hugangquan
- * @date 2020/09/09 15:46
- */
+    /**
+     * @author hugangquan
+     * @date 2020/09/09 15:46
+     */
 // 启用缓存配置
-
+@EnablePermession
 @EnableSwagger2
 @EnableKnife4j
 @EnableCaching

@@ -1,15 +1,13 @@
 package com.ruigu.springboot.study.aop;
 
-import com.github.xiaoymin.knife4j.spring.annotations.EnableKnife4j;
 import org.springframework.context.annotation.Import;
 
 import java.lang.annotation.*;
 
-@Target(ElementType.METHOD)
+@Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-public @interface HasPermession {
-
-    String value() default "";
+@Import(PermessionValidator.class)
+public @interface EnablePermession {
 
 }

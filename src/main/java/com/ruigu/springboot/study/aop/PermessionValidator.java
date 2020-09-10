@@ -19,7 +19,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @date 2020/09/10 15:03
  */
 @Aspect
-@Component
+// @Component
 public class PermessionValidator {
 
     private static final Map<Integer, Set<String>> map = new ConcurrentHashMap<>(16);
