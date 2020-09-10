@@ -1,5 +1,6 @@
 package com.ruigu.springboot.study;
 
+import com.ruigu.springboot.study.aop.HasPermession;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
@@ -54,6 +55,16 @@ public class UserController {
     @RequestMapping(value = "/testCache",method = RequestMethod.GET)
     @ApiOperation(value="测试spring缓存")
     public Object testCache(@ApiParam(value = "用户id") Integer id){
+        Cache cache = cacheManager.getCache("user");
+        String idx = cache.get(1, String.class);
+        System.out.println(idx);
+        return cacheDemoService.getFromDB(id);
+    }
+
+    @RequestMapping(value = "/testAop",method = RequestMethod.GET)
+    @ApiOperation(value="testAop")
+    @HasPermession(value = "USER_PERMESSION")
+    public Object testAop(@ApiParam(value = "用户id") Integer id){
         Cache cache = cacheManager.getCache("user");
         String idx = cache.get(1, String.class);
         System.out.println(idx);
