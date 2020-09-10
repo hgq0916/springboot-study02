@@ -1,5 +1,6 @@
 package com.ruigu.springboot.study;
 
+import com.github.xiaoymin.knife4j.spring.annotations.EnableKnife4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cache.CacheManager;
@@ -11,6 +12,7 @@ import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import java.time.Duration;
 
@@ -19,6 +21,9 @@ import java.time.Duration;
  * @date 2020/09/09 15:46
  */
 // 启用缓存配置
+
+@EnableSwagger2
+@EnableKnife4j
 @EnableCaching
 @SpringBootApplication
 public class MyApplication {
