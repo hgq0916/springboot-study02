@@ -58,6 +58,26 @@
             <artifactId>commons-lang3</artifactId>
             <version>3.0</version>
         </dependency>
+        <dependency>
+            <groupId>org.nlpcn</groupId>
+            <artifactId>nlp-lang</artifactId>
+            <version>1.7.7</version>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
+        </dependency>
     </dependencies>
 
 </project>
