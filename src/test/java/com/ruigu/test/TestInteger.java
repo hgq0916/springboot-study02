@@ -44,4 +44,9 @@ public class TestInteger {
         }
     }
 
+    @Test
+    public void test2(){
+        System.out.println(Integer.parseInt(""));
+    }
+
 }
