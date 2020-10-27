@@ -2,17 +2,21 @@ package com.ruigu.springboot.study;
 
 import com.github.xiaoymin.knife4j.spring.annotations.EnableKnife4j;
 import com.ruigu.springboot.study.aop.EnablePermession;
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cache.concurrent.ConcurrentMapCacheManager;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.ComponentScans;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
 import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.serializer.RedisSerializer;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import java.time.Duration;
@@ -27,6 +31,7 @@ import java.time.Duration;
 @EnableKnife4j
 @EnableCaching
 @SpringBootApplication
+@MapperScan(basePackages = "com.ruigu.springboot.study.redis.cache.mapper")
 public class MyApplication {
 
     public static void main(String[] args) {
@@ -43,8 +48,8 @@ public class MyApplication {
     @Bean
     public CacheManager cacheManager(RedisConnectionFactory factory) {
         RedisCacheConfiguration config = RedisCacheConfiguration.defaultCacheConfig()
-                .entryTtl(Duration.ofSeconds(60))
-                .disableCachingNullValues();
+                .entryTtl(Duration.ofSeconds(60));
+                //.disableCachingNullValues();
 
         return RedisCacheManager.builder(factory)
                 .cacheDefaults(config)
@@ -54,8 +59,15 @@ public class MyApplication {
 
     @Bean
     public RedisTemplate redisTemplate(RedisConnectionFactory factory) {
-        StringRedisTemplate template = new StringRedisTemplate(factory);
-        return template;
+        RedisTemplate redisTemplate = new RedisTemplate();
+        redisTemplate.setConnectionFactory(factory);
+
+        RedisSerializer stringSerializer = redisTemplate.getStringSerializer();
+        // 将Key和其散列表数据类型的filed都修改为使用StringRedisSerializer进行序列化
+        redisTemplate.setKeySerializer(stringSerializer);
+        redisTemplate.setHashKeySerializer(stringSerializer);
+
+        return redisTemplate;
     }
 
 }
