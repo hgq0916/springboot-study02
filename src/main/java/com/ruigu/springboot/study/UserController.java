@@ -2,6 +2,7 @@ package com.ruigu.springboot.study;
 
 import com.ruigu.springboot.study.aop.EnablePermession;
 import com.ruigu.springboot.study.aop.HasPermession;
+import com.ruigu.springboot.study.event.MsgPublisher;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
@@ -30,6 +31,9 @@ public class UserController {
     private CacheDemoService cacheDemoService;
     @Autowired
     private CacheManager cacheManager;
+
+    @Autowired
+    private MsgPublisher msgPublisher;
 
     @ApiOperation(value="测试spring异步调用方法")
     @RequestMapping(value = "/testSync",method = RequestMethod.GET)
@@ -71,5 +75,14 @@ public class UserController {
         System.out.println(idx);
         return cacheDemoService.getFromDB(id);
     }
+
+    @RequestMapping(value = "/testEvent",method = RequestMethod.GET)
+    @ApiOperation(value="testEvent")
+    //@HasPermession(value = "USER_PERMESSION")
+    public Object testEvent(@ApiParam(value = "msg") String msg){
+        msgPublisher.publishMsg(msg);
+        return "ok";
+    }
+
 
 }

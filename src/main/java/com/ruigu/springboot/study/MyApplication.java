@@ -17,6 +17,7 @@ import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.serializer.RedisSerializer;
+import org.springframework.scheduling.annotation.EnableAsync;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import java.time.Duration;
@@ -31,6 +32,7 @@ import java.time.Duration;
 @EnableKnife4j
 @EnableCaching
 @SpringBootApplication
+@EnableAsync
 @MapperScan(basePackages = "com.ruigu.springboot.study.redis.cache.mapper")
 public class MyApplication {
 
